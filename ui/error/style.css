@@ -1,0 +1,38 @@
+*, ::before, ::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    background-color: crimson;
+    padding: 5rem;
+}
+
+a {
+    color: white;
+}
+
+.sad-face {
+    font-size: 10rem;
+    margin-bottom: 3rem;
+}
+
+.x {
+    cursor: pointer;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+.x svg {
+    fill: white;
+    width: 3rem;
+    height: 3rem;
+}

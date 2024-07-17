@@ -1,18 +1,8 @@
-import { app, BrowserWindow } from "electron";
-import path from "path";
-
-const createWindow = () => {
-    const win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        autoHideMenuBar: true
-    });
-
-    win.loadFile(path.join(process.cwd(), "ui", "index.html"));
-}
+import { app } from "electron";
+import * as windows from "./windows";
 
 app.once("ready", () => {
-    createWindow();
+    windows.error();
 });
 
 app.once("window-all-closed", () => {
