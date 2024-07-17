@@ -2,7 +2,7 @@ import { app, BrowserWindow, shell, ipcMain, screen } from "electron";
 import path from "path";
 
 /** Tampilkan window kesalahan */
-export function error() {
+export function error(e: Error) {
     const mainPath = path.join(process.cwd(), "ui", "error");
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
@@ -19,6 +19,8 @@ export function error() {
 
     // Deteksi ipc keluar window dari renderer
     ipcMain.handle("quitError", () => window.close());
+    // Kirim Error ke preload
+    window.webContents.send("stackError", e);
 
     // Error perlu dibikin fullscreen sekalian
     window.webContents.once("dom-ready", () => window.setFullScreen(true));
@@ -31,6 +33,5 @@ export function error() {
     window.once("close", () => app.exit(1));
 
     window.loadFile(path.join(mainPath, "index.html"));
-
     return window;
 }

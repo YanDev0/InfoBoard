@@ -8,11 +8,14 @@ html, body {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     user-select: none;
     background-color: crimson;
-    padding: 5rem;
+    margin: 0;
+    padding: 4rem;
 }
 
 a {
@@ -35,4 +38,17 @@ a {
     fill: white;
     width: 3rem;
     height: 3rem;
+}
+
+.log {
+    cursor: text;
+    user-select: text;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    width: 100%;
+    flex-grow: 1;
+    background: white;
+    color: black;
 }
