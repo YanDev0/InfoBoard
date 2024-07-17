@@ -2,14 +2,20 @@
   "name": "infoboard",
   "version": "1.0.0",
   "description": "Papan jadwal digital untuk penggunaan instansi pemerintahan",
-  "main": "src/main.ts",
+  "main": "dist/main.js",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
+    "build": "rm -r dist && tsc && npm run copy-ui",
+    "watch": "rm -r dist && tsc -w",
+
     "lint": "eslint src",
+
     "build-start": "npm run build && electron ./dist/main.js",
     "start": "electron ./dist/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "pack-asar": "asar pack . out/app.asar --unpack-dir {node_modules,src} --exclude-hidden",
+    "copy-ui": "cp -r src/ui/ dist/",
+    "make": "rm -rf out && npm run build && npm run pack-asar && rm -rf out/app.asar.unpacked"
   },
   "repository": {
     "type": "git",
@@ -22,11 +28,15 @@
   },
   "homepage": "https://github.com/YanDev0/TimeBoard#readme",
   "devDependencies": {
+    "@electron/asar": "^3.2.10",
     "@eslint/js": "^9.7.0",
     "electron": "^31.2.1",
     "eslint": "^9.7.0",
     "globals": "^15.8.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.1"
+  },
+  "overrides": {
+    "eslint": "^9.7.0"
   }
 }

@@ -3,7 +3,7 @@ import path from "path";
 
 /** Tampilkan window kesalahan */
 export function error(e: Error) {
-    const mainPath = path.join(process.cwd(), "ui", "error");
+    const mainPath = path.join(__dirname, "ui", "error");
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
     const window = new BrowserWindow({
