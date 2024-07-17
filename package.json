@@ -1,5 +1,5 @@
 {
-  "name": "timeboard",
+  "name": "infoboard",
   "version": "1.0.0",
   "description": "Papan jadwal digital untuk penggunaan instansi pemerintahan",
   "main": "src/main.ts",
