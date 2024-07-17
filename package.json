@@ -1,0 +1,31 @@
+{
+  "name": "timeboard",
+  "version": "1.0.0",
+  "description": "Papan jadwal digital untuk penggunaan instansi pemerintahan",
+  "main": "src/main.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "lint": "eslint src",
+    "start": "npm run build && electron ./dist/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YanDev0/TimeBoard.git"
+  },
+  "author": "YanDev0",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YanDev0/TimeBoard/issues"
+  },
+  "homepage": "https://github.com/YanDev0/TimeBoard#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "electron": "^31.2.1",
+    "eslint": "^9.7.0",
+    "globals": "^15.8.0",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^7.16.1"
+  }
+}
