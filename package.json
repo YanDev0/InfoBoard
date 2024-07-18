@@ -4,8 +4,8 @@
   "description": "Papan jadwal digital untuk penggunaan instansi pemerintahan",
   "main": "dist/main.js",
   "scripts": {
-    "build": "rm -r dist && tsc && npm run copy-ui",
-    "watch": "rm -r dist && tsc -w",
+    "build": "rm -rf dist && npm run copy-ui && tsc",
+    "watch": "rm -rf dist && npm run copy-ui && tsc -w",
 
     "lint": "eslint src",
 
@@ -13,8 +13,8 @@
     "start": "electron ./dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
 
-    "pack-asar": "asar pack . out/app.asar --unpack-dir {node_modules,src} --exclude-hidden",
-    "copy-ui": "cp -r src/ui/ dist/",
+    "pack-asar": "asar pack . out/app.asar --unpack-dir {node_modules,src} --unpack {tsconfig.json,package*.json,eslint.config.*} --exclude-hidden",
+    "copy-ui": "mkdir dist && cp -r src/ui dist/ui",
     "make": "rm -rf out && npm run build && npm run pack-asar && rm -rf out/app.asar.unpacked"
   },
   "repository": {
