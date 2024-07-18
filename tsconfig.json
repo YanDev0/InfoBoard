@@ -1,17 +1,23 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "CommonJS",
     "esModuleInterop": true,
     "noImplicitAny": true,
     "sourceMap": true,
     "outDir": "dist",
-    "rootDir": "src",
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
+      "@/*": ["src/*.ts"]
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/ui",
+    "dist",
+    "out"
   ]
 }

@@ -6,13 +6,10 @@
   "scripts": {
     "build": "rm -rf dist && npm run copy-ui && tsc",
     "watch": "rm -rf dist && npm run copy-ui && tsc -w",
-
     "lint": "eslint src",
-
     "build-start": "npm run build && electron ./dist/main.js",
     "start": "electron ./dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "pack-asar": "asar pack . out/app.asar --unpack-dir {node_modules,src} --unpack {tsconfig.json,package*.json,eslint.config.*} --exclude-hidden",
     "copy-ui": "mkdir dist && cp -r src/ui dist/ui",
     "make": "rm -rf out && npm run build && npm run pack-asar && rm -rf out/app.asar.unpacked"
@@ -30,13 +27,18 @@
   "devDependencies": {
     "@electron/asar": "^3.2.10",
     "@eslint/js": "^9.7.0",
+    "@types/module-alias": "^2.0.4",
     "electron": "^31.2.1",
     "eslint": "^9.7.0",
     "globals": "^15.8.0",
+    "module-alias": "^2.2.3",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.1"
   },
   "overrides": {
     "eslint": "^9.7.0"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   }
 }

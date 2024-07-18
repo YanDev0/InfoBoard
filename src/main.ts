@@ -1,8 +1,11 @@
+// Impor kebutuhan modul local
+import "module-alias/register"
+
 import { app } from "electron";
-import * as windows from "./windows";
+import * as windows from "@/windows";
 
 app.once("ready", () => {
-    throw new Error("Meong")
+    throw new Error("Test");
 });
 
 app.once("window-all-closed", () => {
