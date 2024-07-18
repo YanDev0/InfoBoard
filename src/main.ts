@@ -5,7 +5,7 @@ import { app } from "electron";
 import * as windows from "@/windows";
 
 app.once("ready", () => {
-    throw new Error("Test");
+    windows.front();
 });
 
 app.once("window-all-closed", () => {
