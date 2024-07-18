@@ -19,24 +19,15 @@ export function front() {
         height
     });
 
-    // Fulscreen ke monitor eksternal
-    window.webContents.once("dom-ready", () => {
-        window.setFullScreen(true);
-
-        // Deteksi jika monitor eksternal terlepas
-        window.on("move", () => {
-            const [x] = window.getPosition();
-
-            if (!x) {
-                window.close();
-                throw new Error("Window jadwal terlepas dari monitor external.");
-            }
-        });
+    // Deteksi jika monitor eksternal terlepas
+    screen.on("display-removed", () => {
+        throw new Error("Window jadwal terlepas dari monitor external.");
     });
 
+    // Atur front ke fullscreen
+    window.webContents.once("dom-ready", () => window.setFullScreen(true));
     // Cegah front keluar dari fullscreen
     window.on("leave-full-screen", () => window.setFullScreen(true));
-    
 
     window.loadFile(path.join(mainPath, "index.html"));
     return window;
@@ -49,6 +40,7 @@ export function error(e: Error) {
 
     const window = new BrowserWindow({
         autoHideMenuBar: true,
+        alwaysOnTop: true,
         x: 0,
         y: 0,
         width,

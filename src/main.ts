@@ -1,7 +1,7 @@
 // Impor kebutuhan modul local
 import "module-alias/register"
 
-import { app } from "electron";
+import { app, BrowserWindow } from "electron";
 import * as windows from "@/windows";
 
 app.once("ready", () => {
@@ -21,5 +21,12 @@ async function catchError (e: Error) {
     console.error(e);
 
     await app.whenReady();
-    windows.error(e);
+    const errWindow = windows.error(e);
+
+    // Tutup window lain
+    for (const window of BrowserWindow.getAllWindows()) {
+        if (window == errWindow) continue; // Kecuali window error
+
+        window.close();
+    }
 }
