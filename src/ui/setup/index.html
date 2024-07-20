@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:">
+
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Setup | InfoBoard</title>
+</head>
+<body class="bg-light">
+    <div id="top" class="container-fluid p-5 d-flex justify-content-center align-items-center flex-column text-center">
+        <h1><b>Selamat Datang!</b></h1>
+        <p>
+            <b>InfoBoard</b> adalah sebuah aplikasi gratis dan sumber terbuka untuk kebutuhan papan jadwal digital di instansi pemerintahan atau instansi lainnya.
+            Perlu diingat bahwa aplikasi ini dibuat <b>TANPA GARANSI</b> apapun. Seluruh kesalahan yang terjadi merupakan tanggung jawab pengguna.
+            Masalah aplikasi dapat dilaporkan di <a href="https://github.com/YanDev0/InfoBoard/issues" class="text-black" target="_blank" rel="noopener noreferrer">halaman issue Github</a>.
+            <br><br>
+            Tekan <b>Lanjutkan</b> untuk memulai penyiapan InfoBoard.
+        </p>
+        <button type="button" class="btn btn-info lanjutkan">Lanjutkan</button>
+    </div>
+
+    <div id="middle" class="container-fluid p-5 d-flex flex-column justify-content-center">
+        <i class="bi bi-arrow-left back fs-3 ps-5 pt-5"></i>
+
+        <label for="nama" class="form-label mb-4">
+            <h5>Nama</h5>
+            <input class="form-control w-100" type="text" name="nama" id="nama" placeholder="Masukkan nama Anda/Instansi" c required>
+        </label>
+        
+        <label for="logo" class="form-label mb-4">
+            <h5>Pilih Logo</h5>
+            <input type="file" name="logo" id="logo" class="form-control w-100" accept="image/png" required>
+        </label>
+        
+        <h5>Pengaturan Tambahan</h5>
+        <label for="cegahWindowDitutup" class="form-check-label mb-4">
+            <input type="checkbox" name="cegahWindowDitutup" id="cegahWindowDitutup" class="form-check-input">
+            <span>Cegah aplikasi ditutup saat dijalankan.</span>
+        </label>
+
+        <button type="submit" class="btn btn-info lanjutkan ">Lanjutkan</button>
+    </div>
+
+    <div id="bottom" class="container-fluid p-5">
+        <i class="bi bi-arrow-left back position-static fs-3"></i>
+
+        <div class="alert alert-warning display-alert text-center" role="alert">
+            Monitor kedua tidak terdeteksi. Harap hubungkan monitor kedua ke perangkat.
+        </div>
+
+        <div class="row row-cols-2 gy-0 gx-0 mb-3">
+            <div class="col text-center">
+                <i class="bi bi-display position-relative d-flex justify-content-center align-items-center">
+                    <i class="bi bi-1-circle-fill position-absolute display-number"></i>
+                </i>
+            </div>
+
+            <div class="col text-center">
+                <i class="bi bi-display position-relative d-flex justify-content-center align-items-center">
+                    <i class="bi bi-2-circle-fill position-absolute display-number"></i>
+                </i>
+            </div>
+
+            <div class="col text-center display number-0">
+                <span class="label">Tidak diketahui</span>
+                <br>
+                <span class="size">0000x0000</span>
+                <br>
+                <span>Status: </span><span class="status badge text-bg-danger">Terputus</span>
+            </div>
+
+            <div class="col text-center display number-1">
+                <span class="label">Tidak diketahui</span>
+                <br>
+                <span class="size">0000x0000</span>
+                <br>
+                <span>Status: </span><span class="status badge text-bg-danger">Terputus</span>
+            </div>
+        </div>
+        <p class="w-100 text-center">
+            Monitor <i class="bi bi-1-circle"></i> berfungsi sebagai monitor admin untuk melakukan perubahan internal seperti penambahan dan perubahan jadwal.
+            Monitor <i class="bi bi-2-circle"></i> berfungsi sebagai monitor untuk menampilkan jadwal-jadwal kepada publik.
+        </p>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>

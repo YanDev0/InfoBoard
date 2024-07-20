@@ -2,10 +2,15 @@
 import "module-alias/register"
 
 import { app, BrowserWindow } from "electron";
+import { isConfigExists } from "@/config";
 import * as windows from "@/windows";
 
 app.once("ready", () => {
-    windows.front();
+    if (!isConfigExists()) {
+        windows.setup();
+    } else {
+        windows.front();
+    }
 });
 
 app.once("window-all-closed", () => {

@@ -1,0 +1,56 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    position: relative;
+    user-select: none;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#top, #middle, #bottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: .7s;
+}
+
+#top.show, #middle.show, #bottom.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#top.hide, #middle.hide, #bottom.hide {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-100px);
+}
+
+.back, .next {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.next {
+    left: unset;
+    right: 0;
+}
+
+.bi-display {
+    line-height: 1;
+    font-size: 10rem;
+}
+
+.bi-display .display-number {
+    font-size: 4rem;
+    line-height: 1;
+    transform: translateY(-8.50px);
+}

@@ -1,5 +1,10 @@
-import { app, BrowserWindow, shell, ipcMain, screen } from "electron";
+import { app, BrowserWindow, shell, ipcMain, screen, dialog } from "electron";
+import { readConfig, isConfigExists, defaultConfigs } from "@/config";
 import path from "path";
+
+const isDevToolsEnabled = (isConfigExists())
+    ? readConfig().aktifkanDevTools
+    : defaultConfigs.aktifkanDevTools
 
 /** Tampilkan window depan (papan jadwal) */
 export function front() {
@@ -13,10 +18,12 @@ export function front() {
     const { width, height } = externalDisplay.workAreaSize;
     const window = new BrowserWindow({
         autoHideMenuBar: true,
+        frame: false,
         x: externalDisplay.nativeOrigin.x,
         y: 0,
         width,
-        height
+        height,
+        webPreferences: { devTools: isDevToolsEnabled }
     });
 
     // Deteksi jika monitor eksternal terlepas
@@ -28,6 +35,61 @@ export function front() {
     window.webContents.once("dom-ready", () => window.setFullScreen(true));
     // Cegah front keluar dari fullscreen
     window.on("leave-full-screen", () => window.setFullScreen(true));
+
+    window.loadFile(path.join(mainPath, "index.html"));
+    return window;
+}
+
+/** Tampilan window setup */
+export function setup() {
+    const mainPath = path.join(__dirname, "ui", "setup");
+
+    const window = new BrowserWindow({
+        autoHideMenuBar: true,
+        resizable: false,
+        webPreferences: {
+            devTools: isDevToolsEnabled,
+            preload: path.join(mainPath, "preload.js")
+        }
+    });
+
+    // Berikan info sebelum menutup setup
+    window.on("close", e => {
+        e.preventDefault();
+        const choice = dialog.showMessageBoxSync(window, {
+            title: "InfoBoard",
+            message: "Penyiapan InfoBoard belum selesai. Apakah anda yakin ingin menutup aplikasi?",
+            type: "question",
+            buttons: ["Tidak", "Iya"]
+        });
+
+        if (choice) app.exit();
+    });
+
+    // tag <a> perlu dibuka eksternal
+    window.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url);
+        return { action: "deny" };
+    });
+
+    // Kirim data display ke preload
+    const sendExternalDisplayInfo = (display: Electron.Display | null) => {
+        window.webContents.send("externalDisplay", display);
+    }
+
+    // Dengarkan input monitor masuk dan keluar lalu kirim ke renderer
+    screen.on("display-added", (_e, display) => sendExternalDisplayInfo(display));
+    screen.on("display-removed", () => sendExternalDisplayInfo(null));
+    // Langsung kirim 
+    ipcMain.handle("primaryDisplay", () => screen.getPrimaryDisplay());
+    ipcMain.handle("externalDisplay", () => screen.getAllDisplays()[1] || null);
+
+    // Matikan screen listener jika window ditutup
+    window.on("closed", () => {
+        screen.removeAllListeners();
+        ipcMain.removeHandler("primaryDisplay");
+        ipcMain.removeHandler("externalDisplay");
+    });
 
     window.loadFile(path.join(mainPath, "index.html"));
     return window;
@@ -46,6 +108,7 @@ export function error(e: Error) {
         width,
         height,
         webPreferences: {
+            devTools: isDevToolsEnabled,
             preload: path.join(mainPath, "preload.js")
         }
     });

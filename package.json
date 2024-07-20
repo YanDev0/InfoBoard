@@ -8,10 +8,10 @@
     "watch": "rm -rf dist && npm run copy-ui && tsc -w",
     "lint": "eslint src",
     "build-start": "npm run build && electron ./dist/main.js",
-    "start": "electron ./dist/main.js",
+    "start": "npm run copy-ui && electron ./dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack-asar": "asar pack . out/app.asar --unpack-dir {node_modules,src} --unpack {tsconfig.json,package*.json,eslint.config.*} --exclude-hidden",
-    "copy-ui": "mkdir dist && cp -r src/ui dist/ui",
+    "copy-ui": "mkdir -p dist && cp -rT src/ui dist/ui && cp -rT src/assets dist/assets",
     "make": "rm -rf out && npm run build && npm run pack-asar && rm -rf out/app.asar.unpacked"
   },
   "repository": {
