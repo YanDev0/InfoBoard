@@ -3,13 +3,13 @@ import "module-alias/register"
 
 import { app, BrowserWindow } from "electron";
 import { isConfigExists } from "@/config";
-import * as windows from "@/windows";
+import * as window from "@/window";
 
 app.once("ready", () => {
     if (!isConfigExists()) {
-        windows.setup();
+        window.setup();
     } else {
-        windows.front();
+        window.front();
     }
 });
 
@@ -26,7 +26,7 @@ async function catchError (e: Error) {
     console.error(e);
 
     await app.whenReady();
-    const errWindow = windows.error(e);
+    const errWindow = window.error(e);
 
     // Tutup window lain
     for (const window of BrowserWindow.getAllWindows()) {
