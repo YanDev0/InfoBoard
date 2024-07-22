@@ -1,4 +1,9 @@
-import { isDevToolsEnabled } from "@/window";
+/**
+ * @todo Lagi nyari cara biar front window tidak bisa ditutup saat masuk step "bottom".
+ * @todo Cuman saya tidak mau pikirin itu dulu untuk saat ini.
+ */
+
+import { isDevToolsEnabled, front } from "@/window";
 import { BrowserWindow, dialog, app, shell, screen, ipcMain } from "electron";
 import path from "path";
 
@@ -46,11 +51,26 @@ export function setup() {
     ipcMain.handle("primaryDisplay", () => screen.getPrimaryDisplay());
     ipcMain.handle("externalDisplay", () => screen.getAllDisplays()[1] || null);
 
+    // Handle pembukaan front window
+    let frontWindow: BrowserWindow;
+    ipcMain.on("openFrontWindow", () => {
+        frontWindow = front(true);
+        window.focus();
+    });
+    ipcMain.on("closeFrontWindow", () => {
+        if (frontWindow) frontWindow.close();
+    });
+    ipcMain.on("changeZoomFrontWindow", (_e, number) => {
+        if (frontWindow) frontWindow.webContents.setZoomFactor(number);
+    });
+
     // Matikan screen listener jika window ditutup
     window.on("closed", () => {
         screen.removeAllListeners();
         ipcMain.removeHandler("primaryDisplay");
         ipcMain.removeHandler("externalDisplay");
+        ipcMain.removeHandler("openFrontWindow");
+        ipcMain.removeHandler("closeFrontWindow");
     });
 
     window.loadFile(path.join(mainPath, "index.html"));

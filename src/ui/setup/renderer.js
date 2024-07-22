@@ -1,8 +1,13 @@
 (() => {
     const top = document.querySelector("#top");
     const middle = document.querySelector("#middle");
+
     /** @type {NodeListOf<HTMLObjectElement>} */
     const inputs = middle.querySelectorAll("input");
+    /** @type {Electron.Display | null} */
+    let externalDisplay = null;
+    /** @type {"top" | "middle" | "bottom" | "end"} */
+    let stepPos;
 
     // Animasi awal
     setTimeout(() => top.classList.add("show"), 100);
@@ -31,12 +36,13 @@
 
     // Beberapa fungsi tersendiri untuk step setup
     onPageShow(part => {
-        switch(part.id) {
-            case "middle":
-                // TODO
-            break;
-        }
-    })
+        stepPos = part.id;
+
+        // Buka front demo jika external display sudah terhubung dari tadi 
+        if (stepPos == "bottom" && externalDisplay) {
+            window.front.open();
+        } else window.front.close();
+    });
 
     // Tambahkan data display primary dan eksternal
     window.display.primaryDisplay().then(display => {
@@ -44,7 +50,26 @@
     });
     window.display.externalDisplay().then(updateExternalDisplayInfo);
     // Dengarkan display eksternal
-    window.display.onExternalDisplay(updateExternalDisplayInfo);
+    window.display.onExternalDisplay(display => {
+        if (stepPos == "bottom" && display) {
+            window.front.open();
+        } else if (stepPos == "bottom" && !display) {
+            window.front.close();
+        }
+
+        updateExternalDisplayInfo(display);
+    });
+
+    // Dengarkan perubahaan zoom front
+    document.querySelector("#zoomFront").onchange = (e) => {
+        let float = parseFloat(e.target.value);
+
+        if (isNaN(float) || float > 5) {
+            float = e.target.value = 5;
+        }
+
+        window.front.changeZoom(float);
+    }
 
     /** Dengarkan jika sebuah bagian website muncul */
     function onPageShow(callback) {
@@ -78,12 +103,18 @@
         }
     }
 
-    /** @param {Electron.Display} display */
+    /** @param {Electron.Display | null} display */
     function updateExternalDisplayInfo(display) {
+        externalDisplay = display;
+        
         const alert = document.querySelector(".display-alert");
+        const bottomContinue = document.querySelector(".when-external-show");
+        
         if (display) {
+            bottomContinue.classList.remove("d-none");
             alert.classList.add("d-none");
         } else {
+            bottomContinue.classList.add("d-none");
             alert.classList.remove("d-none");
         }
         

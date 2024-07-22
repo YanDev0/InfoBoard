@@ -3,7 +3,7 @@ import { screen, BrowserWindow } from "electron";
 import path from "path";
 
 /** Tampilkan window depan (papan jadwal) */
-export function front() {
+export function front(demo?: boolean) {
     const mainPath = path.join(process.cwd(), "src", "ui", "front");
     const externalDisplay = screen.getAllDisplays()[1];
 
@@ -23,7 +23,7 @@ export function front() {
     });
 
     // Deteksi jika monitor eksternal terlepas
-    screen.on("display-removed", () => {
+    if (!demo) screen.on("display-removed", () => {
         throw new Error("Window jadwal terlepas dari monitor external.");
     });
 

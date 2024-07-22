@@ -32,6 +32,6 @@ async function catchError (e: Error) {
     for (const window of BrowserWindow.getAllWindows()) {
         if (window == errWindow) continue; // Kecuali window error
 
-        window.close();
+        window.destroy();
     }
 }
