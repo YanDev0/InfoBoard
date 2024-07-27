@@ -4,7 +4,7 @@ import path from "path";
 
 /** Tampilkan window depan (papan jadwal) */
 export function front(demo?: boolean) {
-    const mainPath = path.join(process.cwd(), "src", "ui", "front");
+    const mainPath = path.join(__dirname, "..", "ui", "front");
     const externalDisplay = screen.getAllDisplays()[1];
 
     if (!externalDisplay) {

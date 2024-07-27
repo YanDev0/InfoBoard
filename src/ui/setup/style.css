@@ -9,7 +9,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#top, #middle, #bottom {
+#top, #middle, #bottom, #end {
     position: absolute;
     top: 0;
     left: 0;
@@ -20,13 +20,13 @@ body {
     transition: .7s;
 }
 
-#top.show, #middle.show, #bottom.show {
+#top.show, #middle.show, #bottom.show, #end.show {
     visibility: visible;
     opacity: 1;
     transform: translateY(0);
 }
 
-#top.hide, #middle.hide, #bottom.hide {
+#top.hide, #middle.hide, #bottom.hide, #end.hide {
     visibility: hidden;
     opacity: 0;
     transform: translateY(-100px);

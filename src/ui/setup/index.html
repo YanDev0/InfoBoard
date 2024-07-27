@@ -21,11 +21,11 @@
             <br><br>
             Tekan <b>Lanjutkan</b> untuk memulai penyiapan InfoBoard.
         </p>
-        <button type="button" class="btn btn-info lanjutkan">Lanjutkan</button>
+        <button type="button" data-parent="top" data-to="middle" class="btn btn-info lanjutkan">Lanjutkan</button>
     </div>
 
     <div id="middle" class="container-fluid p-5 d-flex flex-column justify-content-center">
-        <i class="bi bi-arrow-left back fs-3 ps-5 pt-5"></i>
+        <i data-parent="middle" data-to="top" class="bi bi-arrow-left back fs-3 ps-5 pt-5"></i>
 
         <label for="nama" class="form-label mb-4">
             <h5>Nama</h5>
@@ -43,11 +43,11 @@
             <span>Cegah aplikasi ditutup saat dijalankan.</span>
         </label>
 
-        <button type="submit" class="btn btn-info lanjutkan ">Lanjutkan</button>
+        <button type="submit" data-parent="middle" data-to="bottom" class="btn btn-info lanjutkan ">Lanjutkan</button>
     </div>
 
     <div id="bottom" class="container-fluid p-5">
-        <i class="bi bi-arrow-left back position-static fs-3"></i>
+        <i data-parent="bottom" data-to="middle" class="bi bi-arrow-left back position-static fs-3"></i>
 
         <div class="alert alert-warning display-alert text-center" role="alert">
             Monitor kedua tidak terdeteksi. Harap hubungkan monitor kedua ke perangkat.
@@ -97,9 +97,19 @@
             <div>
                 <small>&nbsp</small>
                 <br>
-                <button type="submit" class="btn btn-info lanjutkan">Lanjutkan</button>
+                <button type="submit" data-parent="bottom" data-to="end" class="btn btn-info lanjutkan">Lanjutkan</button>
             </div>
         </div>
+    </div>
+
+    <div id="end" class="container-fluid p-5 d-flex flex-column justify-content-center align-items-center">
+        <i data-parent="end" data-to="bottom" class="bi bi-arrow-left back fs-3 ps-5 pt-5"></i>
+
+        <h1><b>InfoBoard Telah Siap!</b></h1>
+        <p>
+            Silahkan klik tombol dibawah untuk mengakhiri penyiapan.
+        </p>
+        <button type="submit" data-parent="end" class="btn btn-info lanjutkan end">Lanjutkan</button>
     </div>
 
     <script src="renderer.js"></script>

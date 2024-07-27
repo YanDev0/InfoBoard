@@ -11,7 +11,7 @@ export const path = (process.platform == "win32")
 export const configPath = join(path, "config.json");
 
 /** Konfigurasi default */
-export const defaultConfigs: iConfigs = {
+export const defaultConfigs: IConfigs = {
     nama: "Anonim",
     logo: null,
     aktifkanDevTools: true, // Ubah nanti di release
@@ -25,8 +25,8 @@ if (!existsSync(path)) {
 }
 
 /** Simpan konfigurasi */
-export function saveConfig(config?: iConfigs) {
-    const configs: iConfigs = {
+export function saveConfig(config?: IConfigs) {
+    const configs: IConfigs = {
         ...defaultConfigs,
         ...config
     }
@@ -35,7 +35,7 @@ export function saveConfig(config?: iConfigs) {
 }
 
 /** Perbarui config */
-export function updateConfig(config: iConfigs) {
+export function updateConfig(config: IConfigs) {
     const oldConfig = readConfig();
     const newConfig = {
         ...oldConfig,
@@ -47,10 +47,10 @@ export function updateConfig(config: iConfigs) {
 
 /** Baca konfigurasi */
 export function readConfig() {
-    let config: iConfigs;
+    let config: IConfigs;
 
     try {
-        config = JSON.parse(readFileSync(configPath, { encoding: "utf-8" })) as iConfigs;
+        config = JSON.parse(readFileSync(configPath, { encoding: "utf-8" })) as IConfigs;
     } catch (e) {
         throw new Error("File konfigurasi tidak dapat dibaca.");
     }
@@ -63,7 +63,8 @@ export function isConfigExists() {
     return existsSync(configPath);
 }
 
-interface iConfigs {
+export interface IConfigs {
+    [key: string]: string | boolean | number,
     nama?: string,
     logo?: string | null,
     aktifkanDevTools?: boolean,

@@ -4,15 +4,21 @@
   "description": "Papan jadwal digital untuk penggunaan instansi pemerintahan",
   "main": "dist/main.js",
   "scripts": {
-    "build": "rm -rf dist && npm run copy-ui && tsc",
-    "watch": "rm -rf dist && npm run copy-ui && tsc -w",
+    "build": "rimraf dist && npm run copy && tsc",
+    "watch": "rimraf dist && npm run copy && tsc -w",
+
     "lint": "eslint src",
+
     "build-start": "npm run build && electron ./dist/main.js",
-    "start": "npm run copy-ui && electron ./dist/main.js",
+    "start": "npm run copy && electron ./dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    
+    "copy": "npm run copy-ui && npm run copy-assets",
+    "copy-assets": "copyfiles -u 2 \"src/assets/**/*\" \"dist/assets\"",
+    "copy-ui": "copyfiles -e \"**/*.ts\" -u 2 \"src/ui/**/*\" \"dist/ui\"",
+
     "pack-asar": "asar pack . out/app.asar --unpack-dir {node_modules,src} --unpack {tsconfig.json,package*.json,eslint.config.*} --exclude-hidden",
-    "copy-ui": "mkdir -p dist && cp -rT src/ui dist/ui && cp -rT src/assets dist/assets",
-    "make": "rm -rf out && npm run build && npm run pack-asar && rm -rf out/app.asar.unpacked"
+    "make": "rimraf out && npm run build && npm run pack-asar && rimraf out/app.asar.unpacked"
   },
   "repository": {
     "type": "git",
@@ -28,10 +34,12 @@
     "@electron/asar": "^3.2.10",
     "@eslint/js": "^9.7.0",
     "@types/module-alias": "^2.0.4",
+    "copyfiles": "^2.4.1",
     "electron": "^31.2.1",
     "eslint": "^9.7.0",
     "globals": "^15.8.0",
     "module-alias": "^2.2.3",
+    "rimraf": "^6.0.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.1"
   },

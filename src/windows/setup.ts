@@ -9,7 +9,7 @@ import path from "path";
 
 /** Tampilkan window penyiapan InfoBoard */
 export function setup() {
-    const mainPath = path.join(process.cwd(), "src", "ui", "setup");
+    const mainPath = path.join(__dirname, "..", "ui", "setup");
 
     const window = new BrowserWindow({
         autoHideMenuBar: true,
