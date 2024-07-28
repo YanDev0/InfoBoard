@@ -1,8 +1,8 @@
-import { readConfig, isConfigExists, defaultConfigs } from "@/config";
+import { defaultConfigs, isConfigExists, readConfig } from "@/config";
 
-export const isDevToolsEnabled = (isConfigExists())
-    ? readConfig().aktifkanDevTools
-    : defaultConfigs.aktifkanDevTools
+export const configs = (isConfigExists)
+    ? readConfig()
+    : defaultConfigs
 
 export { front } from '@/windows/front';
 export { setup } from '@/windows/setup';

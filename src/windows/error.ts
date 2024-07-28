@@ -1,4 +1,4 @@
-import { isDevToolsEnabled } from "@/window";
+import { configs } from "@/window";
 import { BrowserWindow, screen, shell, ipcMain, app } from "electron";
 import path from "path"
 
@@ -15,7 +15,7 @@ export function error(e: Error) {
         width,
         height,
         webPreferences: {
-            devTools: isDevToolsEnabled,
+            devTools: configs.aktifkanDevTools,
             preload: path.join(mainPath, "preload.js")
         }
     });

@@ -14,7 +14,7 @@ export const configPath = join(path, "config.json");
 export const defaultConfigs: IConfigs = {
     nama: "Anonim",
     logo: null,
-    aktifkanDevTools: true, // Ubah nanti di release
+    aktifkanDevTools: false,
     cegahWindowDitutup: false,
     gunakanSatuMonitor: false,
     zoomFront: 1
@@ -31,7 +31,7 @@ export function saveConfig(config?: IConfigs) {
         ...config
     }
 
-    writeFileSync(configPath, JSON.stringify(configs));
+    writeFileSync(configPath, JSON.stringify(configs, null, 4));
 }
 
 /** Perbarui config */

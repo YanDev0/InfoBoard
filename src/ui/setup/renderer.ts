@@ -46,7 +46,10 @@ type IStep = "top" | "middle" | "bottom" | "end";
                     }
                 });
 
-                console.log(values);
+                ele.classList.add("d-none");
+                ele.nextElementSibling.classList.remove("d-none");
+
+                setTimeout(() => window.saveConfigs(values), 1000);
             } else {
                 showPart(ele, ele.getAttribute("data-to") as IStep);
             }

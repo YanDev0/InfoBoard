@@ -18,18 +18,11 @@ export interface IFront {
     changeZoom: (number: number) => void
 }
 
-export interface ISetup {
-    /** Destroy setup window */
-    destroyWindow: () => void,
-    /** Save the configuration */
-    saveConfigs: (config: IConfigs) => Promise<boolean>
-}
-
 declare global {
     interface Window {
         display: IDisplay,
         front: IFront,
-        setup: ISetup
+        saveConfigs: (config: IConfig) => void 
     }
     
     interface IConfigs extends IConfig {}

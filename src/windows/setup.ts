@@ -3,7 +3,8 @@
  * @todo Cuman saya tidak mau pikirin itu dulu untuk saat ini.
  */
 
-import { isDevToolsEnabled, front } from "@/window";
+import { saveConfig, type IConfigs } from "@/config";
+import { configs, front } from "@/window";
 import { BrowserWindow, dialog, app, shell, screen, ipcMain } from "electron";
 import path from "path";
 
@@ -15,7 +16,7 @@ export function setup() {
         autoHideMenuBar: true,
         resizable: false,
         webPreferences: {
-            devTools: isDevToolsEnabled,
+            devTools: configs.aktifkanDevTools,
             preload: path.join(mainPath, "preload.js")
         }
     });
@@ -64,7 +65,12 @@ export function setup() {
         if (frontWindow) frontWindow.webContents.setZoomFactor(number);
     });
 
-    // Matikan screen listener jika window ditutup
+    ipcMain.once("setupSaveConfig", (_e, configs: IConfigs) => {
+        saveConfig(configs);
+        window.destroy(); // Close the front window after config saved
+    });
+
+    // Matikan listener jika window ditutup
     window.on("closed", () => {
         screen.removeAllListeners();
         ipcMain.removeHandler("primaryDisplay");

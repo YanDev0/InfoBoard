@@ -1,11 +1,14 @@
-import { isDevToolsEnabled } from "@/window";
+import { configs } from "@/window";
 import { screen, BrowserWindow } from "electron";
 import path from "path";
 
 /** Tampilkan window depan (papan jadwal) */
 export function front(demo?: boolean) {
     const mainPath = path.join(__dirname, "..", "ui", "front");
-    const externalDisplay = screen.getAllDisplays()[1];
+    const displays = screen.getAllDisplays();
+    const externalDisplay = (configs.gunakanSatuMonitor)
+        ? displays[0]
+        : displays[1];
 
     if (!externalDisplay) {
         throw new Error("Monitor eksternal tidak terdeteksi.");
@@ -19,7 +22,9 @@ export function front(demo?: boolean) {
         y: 0,
         width,
         height,
-        webPreferences: { devTools: isDevToolsEnabled }
+        webPreferences: {
+            devTools: configs.aktifkanDevTools
+        }
     });
 
     // Deteksi jika monitor eksternal terlepas
@@ -28,7 +33,10 @@ export function front(demo?: boolean) {
     });
 
     // Atur front ke fullscreen
-    window.webContents.once("dom-ready", () => window.setFullScreen(true));
+    window.webContents.once("dom-ready", () => {
+        window.setFullScreen(true);
+        window.webContents.setZoomFactor(configs.zoomFront || 1);
+    });
     // Cegah front keluar dari fullscreen
     window.on("leave-full-screen", () => window.setFullScreen(true));
 

@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { IDisplay, IFront, ISetup } from "./interface";
+import { IDisplay, IFront } from "./interface";
 
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#top").classList.add("show");
@@ -19,7 +19,4 @@ contextBridge.exposeInMainWorld("front", {
 } as IFront);
 
 // Untuk fungsi window setup
-contextBridge.exposeInMainWorld("setup", {
-    destroyWindow: () => ipcRenderer.send("setupDestroy"),
-    saveConfigs: (config) => ipcRenderer.invoke("setupSaveConfig", config)
-} as ISetup);
+contextBridge.exposeInMainWorld("saveConfigs", (config: IConfigs) => ipcRenderer.send("setupSaveConfig", config));
